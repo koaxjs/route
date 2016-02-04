@@ -2,7 +2,7 @@
   "name": "@koax/route",
   "description": "Simple route middlekoax for koax.",
   "repository": "git://github.com/koaxjs/route.git",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "main": "lib/index.js",
   "scripts": {
@@ -10,8 +10,7 @@
     "postpublish": "make clean",
     "postversion": "git push && git push --tags && npm publish --access=public"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "koax": "^0.3.0",
     "babel-cli": "^6.4.0",
