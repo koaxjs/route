@@ -15,17 +15,45 @@ Simple route middlekoax for koax.
 ## Usage
 
 ```js
-import route from '@koax/route'
+import koax from 'koax'
+import {route, request} from '@koax/route'
 
+let router = koax()
+
+router.use(route('/dep', () => 'norf'))
+router.use(route('/foo', function * () {
+  let res = yield request('/dep')
+  return 'bar ' + res
+}))
+
+router(request('/foo')).then((res) => res) // => 'bar norf'
 ```
 
 ## API
 
-### route(arg)
+### route(path, handler)
+Route middleware.
 
-- `arg` -
+- `path` - path
+- `handler` - function to execute on matched path. `handler` has signature `handler(params)`.
 
-**Returns:**
+**Returns:** koax middleware
+
+### request(path, params)
+Request action creator.
+
+- `path` - path to request
+- `params` - params to path to handler
+
+**Returns:** action object
+
+### mount(path, middleware)
+Mount middleware.
+
+- `path` - path to mount middleware at
+- `middleware` - middleware to mount
+
+**Returns:** koax middleware
 
 ## License
 

@@ -75,3 +75,15 @@ test('should be able to mount router', (t) => {
   app(request('/woot/foo/')).then((res) => t.equal(res, 'bar'))
   app(request('/woot/baz')).then((res) => t.equal(res, 'qux'))
 })
+
+test('* should catch all', (t) => {
+  t.plan(2)
+
+  let app = koax()
+
+  app.use(route('*', () => 'bar'))
+  app.use(route('/baz', () => 'qux'))
+
+  app(request('/foo')).then((res) => t.equal(res, 'bar'))
+  app(request('/baz')).then((res) => t.equal(res, 'bar'))
+})

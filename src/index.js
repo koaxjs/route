@@ -14,7 +14,7 @@ const ROUTE = 'KOAX_ROUTE'
 function route (path, fn) {
   path = normalizePath(path)
   return function * (action, next) {
-    if (action.type === ROUTE && action.payload.path === path) {
+    if (action.type === ROUTE && (action.payload.path === path || path === '*')) {
       return fn(action.payload)
     } else {
       return next()
