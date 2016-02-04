@@ -2,13 +2,13 @@
  * Action
  */
 
-const ROUTE = 'ROUTE'
+const ROUTE = 'KOAX_ROUTE'
 
 /**
- * Route middleware
+ * Route middlekoax
  * @param  {String} path  path of handler
  * @param  {Function} fn  handler
- * @return {Function}     redux style middleware
+ * @return {Function}     redux style middlekoax
  */
 
 function route (path, fn) {
@@ -23,20 +23,21 @@ function route (path, fn) {
 }
 
 /**
- * Mount a middleware stack
- * @param  {String} path  path to mount middleware
- * @param  {Function} mw  middleware stack
- * @return {Fucntion}     redux style middleware
+ * Mount a middlekoax stack
+ * @param  {String} path  path to mount middlekoax
+ * @param  {Function} mw  middlekoax stack
+ * @return {Fucntion}     redux style middlekoax
  */
 
 function mount (path, mw) {
   path = normalizePath(path)
   return function * (action, next, ctx) {
     if (action.type === ROUTE && action.payload.path.indexOf(path) === 0) {
-      return mw({
+      action = {type: action.type, payload: {
         ...action.payload,
         path: action.payload.path.slice(path.length)
-      }, next, ctx)
+      }}
+      return mw(action, next, ctx)
     } else {
       return next()
     }

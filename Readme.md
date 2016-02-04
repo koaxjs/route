@@ -6,7 +6,7 @@
 [![NPM version][npm-image]][npm-url]
 [![Code style][standard-image]][standard-url]
 
-Simple route middleware for koax.
+Simple route middlekoax for koax.
 
 ## Installation
 

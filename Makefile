@@ -31,7 +31,7 @@ init:
 	@git init
 	@git add .
 	@git commit -am "FIRST"
-	@hub create koaxjs/route -d "Simple route middleware for koax."
+	@hub create koaxjs/route -d "Simple route middlekoax for koax."
 	@travis enable
 	@git push -u origin master
 

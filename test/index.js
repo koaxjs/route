@@ -4,7 +4,7 @@
 
 import test from 'tape'
 import {route, mount, request} from '../src'
-import ware from '@koax/ware'
+import koax from 'koax'
 
 /**
  * Tests
@@ -13,7 +13,7 @@ import ware from '@koax/ware'
 test('should route', (t) => {
   t.plan(2)
 
-  let app = ware()
+  let app = koax()
 
   app.use(route('/foo', () => 'bar'))
   app.use(route('/baz', () => 'qux'))
@@ -23,7 +23,7 @@ test('should route', (t) => {
 })
 
 test('should route a sequence of requests', (t) => {
-  let app = ware()
+  let app = koax()
 
   app.use(route('/foo', () => 'bar'))
   app.use(route('/baz', () => 'qux'))
@@ -38,7 +38,7 @@ test('should route a sequence of requests', (t) => {
 })
 
 test('should work with generator handlers', (t) => {
-  let app = ware()
+  let app = koax()
 
   app.use(route('/dep', function * () {
     return 'norf'
@@ -57,4 +57,21 @@ test('should work with generator handlers', (t) => {
     t.deepEqual(res, ['qux', 'norf'])
     t.end()
   })
+})
+
+
+test('should be able to mount router', (t) => {
+  t.plan(3)
+
+  let app = koax()
+
+  let sub = koax()
+  sub.use(route('/foo', () => 'bar'))
+  sub.use(route('/baz/', () => 'qux'))
+
+  app.use(mount('/woot', sub))
+
+  app(request('/woot/foo')).then((res) => t.equal(res, 'bar'))
+  app(request('/woot/foo/')).then((res) => t.equal(res, 'bar'))
+  app(request('/woot/baz')).then((res) => t.equal(res, 'qux'))
 })
